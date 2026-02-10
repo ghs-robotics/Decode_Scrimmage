@@ -1,0 +1,72 @@
+package org.firstinspires.ftc.teamcode.Bot;
+
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
+// This class does all of the math to drive the robot.
+// Most of the time you wont have to touch this.
+// Calculate drive powers drives robot oriented, so forward on the gamepad
+// is forward for the robot. Field oriented drive moves the robot oriented to you
+// so forward on the gamepad is your forward.
+
+public class MecanumDrive {
+
+    private DcMotor leftFrontDrive;
+    private DcMotor leftBackDrive;
+    private DcMotor rightFrontDrive;
+    private DcMotor rightBackDrive;
+
+    //Input
+    private double inputScalerX = -0.7;
+    private double inputScalerY = -0.7;
+    private double inputScalerRot = 0.5;
+
+
+    public MecanumDrive(HardwareMap hardwareMap, Telemetry telemetry){
+
+        // Gets the motor from the hub, make sure the name matches the config on the Driver hub
+        leftFrontDrive = hardwareMap.get(DcMotor.class, "lf");
+        leftBackDrive = hardwareMap.get(DcMotor.class, "lb");
+        rightFrontDrive = hardwareMap.get(DcMotor.class, "rf");
+        rightBackDrive = hardwareMap.get(DcMotor.class, "rb");
+
+        leftFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        leftBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightFrontDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        rightBackDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+    }
+
+    public void setDrivePowers(double lf, double lb, double rf, double rb){
+        leftFrontDrive.setPower(lf);
+        leftBackDrive.setPower(lb);
+        rightFrontDrive.setPower(rf);
+        rightBackDrive.setPower(rb);
+    }
+
+    public void calculateDrivePowers(double x, double y, double rot) {
+        //scale input so motor doesn't necessarily run at full throttle
+        x *= inputScalerX;
+        y *= inputScalerY;
+        rot *= inputScalerRot;
+
+        double leftFrontPower = rot - x + y;
+        double leftBackPower = rot + x + y;
+        double rightFrontPower = rot - x - y;
+        double rightBackPower = rot + x - y;
+
+        setDrivePowers(leftFrontPower, leftBackPower, rightFrontPower, rightBackPower);
+    }
+//    public void FieldOrientedDrive(double right, double forward, double rotate, InertialMeasurementUnit imu) {
+//        double theta = Math.atan2(forward, right);
+//        double r = Math.hypot(right, forward);
+//        theta = AngleUnit.normalizeRadians(theta - imu.heading(AngleUnit.RADIANS));
+//        double newForward = r * Math.sin(theta);
+//        double newRight = r * Math.cos(theta);
+//        calculateDrivePowers(newRight, newForward, rotate);
+//
+//    }
+}
+
+
