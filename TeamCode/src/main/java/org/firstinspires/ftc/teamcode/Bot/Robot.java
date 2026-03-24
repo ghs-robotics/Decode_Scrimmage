@@ -15,7 +15,9 @@ public class Robot {
     // add all parts of the bot here in the form of  public
     // ( the name of the class) (what you name the class object).
 
+
     //public servo servo;
+    public Intake intake;
     public Robot(HardwareMap hardwareMap, Telemetry telemetry) {
         this.hardwareMap = hardwareMap;
         this.telemetry = telemetry;
@@ -26,5 +28,6 @@ public class Robot {
         // (what you name the class object) = new ( the name of the class)(all parameters of the class).
         // the parameters should include hardware map and telemetry.
        // servo = new servo(hardwareMap, telemetry);
+        intake = new Intake(hardwareMap, telemetry);
     }
 }
