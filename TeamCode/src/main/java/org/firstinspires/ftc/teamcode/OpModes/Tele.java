@@ -36,10 +36,11 @@ public class Tele extends LinearOpMode {
             //robot.servo.move(gp1.left_stick_x);
             //-------------------------------------------------------------------------------------
             robot.drive.calculateDrivePowers(gp1.left_stick_x,gp1.left_stick_y,gp1.right_stick_x);
-            robot.intake.turnOn(gp1.x.pressing(), gp1.b.pressing());
+
             //-------------------------------------------------------------------------------------
             //                                  GAMEPAD 2
-            robot.outtake.buttonPressing(gp2.a.pressing()); //button for outtake
+            robot.outtake.buttonPressing(gp2.a.pressed()); //button for outtake
+            robot.intake.turnOn(gp2.x.pressing(), gp2.b.pressing());
             //-------------------------------------------------------------------------------------
             //-------------------------------------------------------------------------------------
             //                                  AUTOMATIC
