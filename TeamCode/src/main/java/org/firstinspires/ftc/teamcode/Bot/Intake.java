@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Bot;
 
+import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE;
+
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -18,8 +20,10 @@ public class Intake {
     }
 
     // add all Class code here
-    public void turnOn(boolean pressing){
-        if(pressing) {
+    public void turnOn(boolean reverse, boolean forward){
+        if(reverse) {
+            motor.setPower(-1);
+        } else if(forward){
             motor.setPower(1);
         } else {
             motor.setPower(0);
